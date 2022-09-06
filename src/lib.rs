@@ -150,7 +150,7 @@ pub trait Receiver: Interface {
     type ReceiverFuture<'a>: Future<Output = Result<(), Self::Error>> + 'a
     where
         Self: 'a;
-    fn receive<'a>(&mut self) -> Self::ReceiverFuture<'a>;
+    fn receive<'a>(&'a mut self) -> Self::ReceiverFuture<'a>;
 
     /// Set the can controller in a mode where it only accept frames matching the given filter.
     ///
