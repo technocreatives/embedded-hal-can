@@ -1,5 +1,8 @@
 //! Controller Area Network
 #![no_std]
+#![feature(generic_associated_types)]
+
+use core::future::Future;
 
 use nb;
 
@@ -144,7 +147,10 @@ pub trait Receiver: Interface {
     /// Return the available `Frame` with the highest priority (lowest ID).
     ///
     /// NOTE: Can-FD Frames will not be received using this function.
-    fn receive(&mut self) -> nb::Result<Self::Frame, Self::Error>;
+    type ReceiverFuture<'a>: Future<Output = Result<(), Self::Error>> + 'a
+    where
+        Self: 'a;
+    fn receive<'a>(&mut self) -> Self::ReceiverFuture<'a>;
 
     /// Set the can controller in a mode where it only accept frames matching the given filter.
     ///
