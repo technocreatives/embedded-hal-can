@@ -147,9 +147,11 @@ pub trait Receiver: Interface {
     /// Return the available `Frame` with the highest priority (lowest ID).
     ///
     /// NOTE: Can-FD Frames will not be received using this function.
-    type ReceiverFuture<'a>: Future<Output = Result<(), Self::Error>> + 'a
+    type ReceiverFuture<'a>: Future<Output = nb::Result<Self::Frame, Self::Error>> + 'a
     where
         Self: 'a;
+    
+    /// TODO
     fn receive<'a>(&'a mut self) -> Self::ReceiverFuture<'a>;
 
     /// Set the can controller in a mode where it only accept frames matching the given filter.
