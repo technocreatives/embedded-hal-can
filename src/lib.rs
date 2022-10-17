@@ -1,6 +1,5 @@
 //! Controller Area Network
 #![no_std]
-#![feature(generic_associated_types)]
 
 use core::future::Future;
 
@@ -48,7 +47,6 @@ pub trait Filter {
     /// (for implementers: must) panic if mask have bits equal to `1` for bit_position `>= 30`.
     fn from_mask(mask: u32, filter: u32) -> Self;
 }
-
 
 /// A Can Frame
 pub trait Frame {
@@ -115,7 +113,6 @@ pub trait FdFrame {
     fn data(&self) -> Option<&[u8]>;
 }
 
-
 /// A CAN interface
 ///
 /// May be a `Transmitter`, `Receiver` or both.
@@ -150,7 +147,7 @@ pub trait Receiver: Interface {
     type ReceiverFuture<'a>: Future<Output = nb::Result<Self::Frame, Self::Error>> + 'a
     where
         Self: 'a;
-    
+
     /// TODO
     fn receive<'a>(&'a mut self) -> Self::ReceiverFuture<'a>;
 
