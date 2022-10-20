@@ -144,7 +144,7 @@ pub trait Receiver: Interface {
     /// Return the available `Frame` with the highest priority (lowest ID).
     ///
     /// NOTE: Can-FD Frames will not be received using this function.
-    type ReceiverFuture<'a>: Future<Output = nb::Result<Self::Frame, Self::Error>> + 'a
+    type ReceiverFuture<'a>: Future<Output = Result<Self::Frame, Self::Error>> + 'a
     where
         Self: 'a;
 
